@@ -1,0 +1,5 @@
+#Exlude node modules
+node_modules/
+
+#Exclude nodemon.json
+nodemon.json
