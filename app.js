@@ -1,23 +1,31 @@
 const express = require('express');
 const productRouter = require('./api/routes/products');
 const morgan = require('morgan');
+const bodyParser = require('body-parser');
+
+//database
+const mongoose = require('mongoose');
+mongoose.connect('mongodb+srv://node-rest-shop:' + 
+    process.env.MONGODB_AT_PASS + 
+    '@node-rest-shop-yupou.mongodb.net/test?retryWrites=true&w=majority');
 
 const app = express();
 
 app.use(morgan('dev'));
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
 app.use('/products' ,productRouter);
 
 app.use((req, res, next) => {
-    res.status(404).json({
-        error: "Page not found"
-    })
-    next();
+    const error = new Error("Page not found");
+    error.status(404);
+    next(error);
 });
 
 app.use((err, req, res, next) => {
-    res.status(500).json({
-        error: err
+    res.status(err.status || 500).json({
+        message: err.message
     });
 });
 

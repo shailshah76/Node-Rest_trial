@@ -1,0 +1,5 @@
+{
+    "env": {
+        "MONGODB_AT_PASS": "node-rest-shop"
+    }
+}
