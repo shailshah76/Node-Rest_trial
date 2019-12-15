@@ -1,5 +1,8 @@
 const express = require('express');
 const productRouter = require('./api/routes/products');
+const orderRouter = require('./api/routes/orders');
+
+//Dev
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
@@ -16,6 +19,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 app.use('/products' ,productRouter);
+app.use('/orders' ,orderRouter);
 
 app.use((req, res, next) => {
     const error = new Error("Page not found");
